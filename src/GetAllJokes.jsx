@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react'
 
 const GetAllJokes = () => {
 
-    const [allJokes, SetAllJokes] = useState({})
+    const [allJokes, SetAllJokes] = useState([])
     useEffect(() => {
         const dataReq = new Request(
             'http://localhost:3000/jokes', {
+            // method: "GET",
             headers: {
                 "content-type": "application/json",
             }
@@ -14,7 +15,6 @@ const GetAllJokes = () => {
         fetch(dataReq)
             .then(resp => resp.json())
             .then(data => {
-                console.log(data)
                 SetAllJokes(data)
             })
             .catch(err => console.error(err))
@@ -22,14 +22,16 @@ const GetAllJokes = () => {
     return (
         <>
             <div>GetAllJokes</div>
-            {allJokes[0] ?
+            {!allJokes[0] ?
+                <p className='text-9xl'>Loading...</p>
+                :
                 allJokes.map(elem => {
-                    return(
-                    <p key={elem.id}>{elem.joke}</p>
+                    return (
+                        <p 
+                            className='focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900'
+                        key={elem.id}>{elem.joke}</p>
                     )
                 })
-                :
-                <p className='text-9xl'>Loading...</p>
             }
         </>
     )
