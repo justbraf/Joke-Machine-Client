@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import ViewCard from './ViewCard'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 
 // Retrieve a single joke from the database specified by its ID
 const GetJoke = () => {
@@ -28,11 +28,19 @@ const GetJoke = () => {
             })
     }, [])
 
+    // React Router useNavigate method allows the implemenation of a back button
+    let goBack = useNavigate();
 
     return (
         <>
             {myJoke.id ?
-                <ViewCard jid={myJoke.id} joke={myJoke.joke} />
+                <>
+                    {/* The button has a click event that runs an anonymous function executing a navigation to the previous page */}
+                    <button onClick={() => goBack(-1)} className='cursor-pointer my-3'>Go Back</button>
+                    <div className='flex flex-row justify-center'>
+                        <ViewCard jid={myJoke.id} joke={myJoke.joke} />
+                    </div>
+                </>
                 :
                 <div className='text-xl'>Loading Joke</div>
             }
