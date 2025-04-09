@@ -30,7 +30,7 @@ const ViewCard = ({jid, joke}) => {
               <div className="absolute p-4 opacity-0 transition-opacity group-hover:relative group-hover:opacity-100 sm:p-6 lg:p-8">
                   <h3 className="mt-4 text-xl font-medium sm:text-2xl">{joke}</h3>
                   <p className="mt-4 text-sm sm:text-base">Joke ID: {jid}</p>
-                  <p className="mt-8 font-bold">Read more</p>
+                  <p className="mt-8 font-bold"><i className="fa-solid fa-expand hover:text-2xl"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i className="fa-solid fa-file-pen text-green-600 hover:text-2xl"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i className="fa-solid fa-trash text-red-600 hover:text-2xl"></i></p>                  
               </div>
           </div>
       </Link>
