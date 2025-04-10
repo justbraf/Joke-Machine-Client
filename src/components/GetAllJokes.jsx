@@ -47,7 +47,7 @@ const GetAllJokes = () => {
                     {allJokes.map(elem => {
                         return (
                             // Since elem contains an object, the dot operator allows access to the keys of the object to access the data
-                            <ViewCard key={elem.id} jid={elem.id} joke={elem.joke} />
+                            <ViewCard key={elem.id} jid={elem.id} joke={elem.joke} answer={elem.answer}/>
                         )
                     })}
                 </div>

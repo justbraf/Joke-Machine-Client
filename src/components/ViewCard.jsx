@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router'
 
 // Component for viewing a single joke that accepts two children props
-const ViewCard = ({ jid, joke }) => {
+const ViewCard = ({ jid, joke, answer }) => {
     // Create a URL for the joke beign displayed
     let newPath = "/joke/" + jid
     let goBack = useNavigate()
@@ -51,7 +51,7 @@ const ViewCard = ({ jid, joke }) => {
                     <h2 className="mt-4 text-xl font-medium sm:text-2xl">{joke}</h2>
                 </div>
                 <div className="absolute p-4 opacity-0 transition-opacity group-hover:relative group-hover:opacity-100 sm:p-6 lg:p-8">
-                    <h3 className="mt-4 text-xl font-medium sm:text-2xl">{joke}</h3>
+                    <h3 className="mt-4 text-xl font-medium sm:text-2xl">{answer}</h3>
                     <p className="mt-4 text-sm sm:text-base">Joke ID: {jid}</p>
                     <p className="mt-8 font-bold"><i className="fa-solid fa-expand hover:text-2xl"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i className="fa-solid fa-file-pen text-green-600 hover:text-2xl"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i className="fa-solid fa-trash text-red-600 hover:text-2xl" onClick={handleDelete}></i></p>
                 </div>

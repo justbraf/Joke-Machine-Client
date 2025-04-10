@@ -3,6 +3,7 @@ import GetAllJokes from './components/GetAllJokes'
 import Home from './components/Home'
 import GetJoke from './components/GetJoke'
 import NotFound from './components/NotFound'
+import AddJoke from './components/AddJoke'
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/jokes" element={<GetAllJokes />} />
+        <Route path="/joke/new" element={<AddJoke />} />
         {/* The colon operator allows the following text to act as a parameter read from the URL */}
         <Route path="/joke/:jid" element={<GetJoke />} />
         <Route path="*" element={<NotFound />} />
