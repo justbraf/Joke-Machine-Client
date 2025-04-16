@@ -38,7 +38,9 @@ const GetJoke = () => {
                     {/* The button has a click event that runs an anonymous function executing a navigation to the previous page */}
                     <button onClick={() => goBack(-1)} className='cursor-pointer my-3'>Go Back</button>
                     <div className='flex flex-row justify-center'>
-                        <ViewCard jid={myJoke.id} joke={myJoke.joke} answer={myJoke.answer} />
+                    <div className='basis-xl'>
+                        <ViewCard jid={myJoke.id} joke={myJoke.joke} answer={myJoke.answer} options={true}/>
+                    </div>
                     </div>
                 </>
                 :

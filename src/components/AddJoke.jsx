@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router'
+import { useNavigate } from 'react-router'
 
 const AddJoke = () => {
     const goBack = useNavigate()
@@ -18,11 +18,11 @@ const AddJoke = () => {
                 headers: {
                     "content-type": "application/json",
                 },
-                body:JSON.stringify(formData)
+                body: JSON.stringify(formData)
             })
-            fetch(dataReq)
-            .then(resp=>resp.json())
-            .then(data=>{
+        fetch(dataReq)
+            .then(resp => resp.json())
+            .then(data => {
                 data.error ? alert(data.error) : alert(data.message)
 
                 goBack(-1)
@@ -36,44 +36,58 @@ const AddJoke = () => {
         })
     }
 
+    const handleGoBack = () => {
+        goBack(-1)
+    }
+
     return (
         <>
-            <Link to={"/"}>Go Home</Link>
-            <div>AddJoke</div>
-            <form method='POST'>
-                <label htmlFor="Joke" className="relative">
-                    <input
-                        type="text"
-                        id="joke"
-                        placeholder=""
-                        className="peer mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm"
-                        onChange={handleChange}
-                    />
+            <div className='w-md mt-5 p-8 border-2 border-indigo-600 rounded-lg'>
+                <form method='POST'>
+                    <div className='my-4'>
+                        <label htmlFor="Joke" className="relative">
+                            <input
+                                type="text"
+                                id="joke"
+                                placeholder=""
+                                className="peer mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm"
+                                onChange={handleChange}
+                            />
 
-                    <span
-                        className="absolute inset-y-0 start-3 -translate-y-5 bg-white px-0.5 text-sm font-medium text-gray-700 transition-transform peer-placeholder-shown:translate-y-0 peer-focus:-translate-y-5"
-                    >
-                        Joke
-                    </span>
-                </label>
-                <label htmlFor="Answer" className="relative">
-                    <input
-                        type="text"
-                        id="answer"
-                        placeholder=""
-                        className="peer mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm"
-                        onChange={handleChange}
-                    />
+                            <span
+                                className="absolute inset-y-0 start-3 -translate-y-5 bg-white px-0.5 text-sm font-medium text-gray-700 transition-transform peer-placeholder-shown:translate-y-0 peer-focus:-translate-y-5"
+                            >
+                                Joke
+                            </span>
+                        </label>
+                    </div>
+                    <div className='my-4'>
+                        <label htmlFor="Answer" className="relative">
+                            <input
+                                type="text"
+                                id="answer"
+                                placeholder=""
+                                className="peer mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm"
+                                onChange={handleChange}
+                            />
 
-                    <span
-                        className="absolute inset-y-0 start-3 -translate-y-5 bg-white px-0.5 text-sm font-medium text-gray-700 transition-transform peer-placeholder-shown:translate-y-0 peer-focus:-translate-y-5"
-                    >
-                        Answer
-                    </span>
-                </label>
-                <button type='submit' onClick={handleSubmit}>Add a New Joke</button>
-            </form>
-
+                            <span
+                                className="absolute inset-y-0 start-3 -translate-y-5 bg-white px-0.5 text-sm font-medium text-gray-700 transition-transform peer-placeholder-shown:translate-y-0 peer-focus:-translate-y-5"
+                            >
+                                Answer
+                            </span>
+                        </label>
+                    </div>
+                    <div className='grid grid-cols-2'>
+                        <button className="group inline-block rounded-sm bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 p-[2px] hover:text-white focus:ring-3 focus:outline-hidden" type='reset' onClick={handleGoBack}>
+                            <span className="block rounded-xs bg-white px-8 py-3 text-sm font-medium group-hover:bg-transparent">Cancel</span>
+                        </button>
+                        <button className="group inline-block rounded-sm bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500 p-[2px] hover:text-white focus:ring-3 focus:outline-hidden" type='submit' onClick={handleSubmit}>
+                            <span className="block rounded-xs bg-white px-8 py-3 text-sm font-medium group-hover:bg-transparent">Add a New Joke</span>
+                        </button>
+                    </div>
+                </form>
+            </div >
         </>
     )
 }

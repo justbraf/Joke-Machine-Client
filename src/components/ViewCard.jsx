@@ -2,10 +2,12 @@ import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router'
 
 // Component for viewing a single joke that accepts two children props
-const ViewCard = ({ jid, joke, answer }) => {
+const ViewCard = ({ jid, joke, answer, options }) => {
     // Create a URL for the joke beign displayed
-    let newPath = "/joke/" + jid
-    let goBack = useNavigate()
+    const newPath = "/joke/" + jid
+    const editPath = "/edit/" + jid
+    const delPath = "/remove/" + jid
+    const goBack = useNavigate()
 
     let handleDelete = () => {
         // Delete object using joke id and http delete method
@@ -22,14 +24,14 @@ const ViewCard = ({ jid, joke, answer }) => {
             .then(data => {
                 alert(jid)
                 data.error ? alert(data.error) : alert(data.message)
-                
+
                 goBack(-1)
             })
             .catch(err => alert("error"))
     }
 
     return (
-        <Link to={newPath} className="group relative block h-64 sm:h-80 lg:h-96">
+        <div className="group relative block h-64 sm:h-80 lg:h-96">
             <span className="absolute inset-0 border-2 border-dashed border-black"></span>
             <div className="relative flex h-full transform items-end border-2 border-black bg-white transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2">
                 <div className="p-4 !pt-0 transition-opacity group-hover:absolute group-hover:opacity-0 sm:p-6 lg:p-8">
@@ -53,11 +55,25 @@ const ViewCard = ({ jid, joke, answer }) => {
                 <div className="absolute p-4 opacity-0 transition-opacity group-hover:relative group-hover:opacity-100 sm:p-6 lg:p-8">
                     <h3 className="mt-4 text-xl font-medium sm:text-2xl">{answer}</h3>
                     <p className="mt-4 text-sm sm:text-base">Joke ID: {jid}</p>
-                    <p className="mt-8 font-bold"><i className="fa-solid fa-expand hover:text-2xl"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i className="fa-solid fa-file-pen text-green-600 hover:text-2xl"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i className="fa-solid fa-trash text-red-600 hover:text-2xl" onClick={handleDelete}></i></p>
+                    <p className="mt-8 font-bold">
+                        {!options ?
+                            <Link to={newPath}>
+                                <i className="fa-solid fa-expand delay-150 duration-300 ease-in-out transistion-transform hover:scale-150"></i>
+                            </Link >
+                            :
+                            <div className='grid grid-cols-4 gap-2'>
+                                <Link to={editPath}>
+                                <i className="fa-solid fa-file-pen text-green-600 delay-150 duration-300 ease-in-out transistion-transform hover:scale-150"></i>
+                                </Link>
+                                <Link to={delPath}>
+                                    <i className="fa-solid fa-trash text-red-600 delay-150 duration-300 ease-in-out transistion-transform hover:scale-150"></i>
+                                </Link>
+                            </div>
+                        }
+                    </p>
                 </div>
             </div>
-        </Link>
-
+        </div>
     )
 }
 
