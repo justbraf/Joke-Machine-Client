@@ -39,7 +39,7 @@ const GetJoke = () => {
                     <button onClick={() => goBack(-1)} className='cursor-pointer my-3'>Go Back</button>
                     <div className='flex flex-row justify-center'>
                     <div className='basis-xl'>
-                        <ViewCard jid={myJoke.id} joke={myJoke.joke} answer={myJoke.answer} options={true}/>
+                            <ViewCard jid={myJoke.id} joke={myJoke.joke} answer={myJoke.answer} jokeImage={myJoke.jokeImage && myJoke.jokeImage} options={true}/>
                     </div>
                     </div>
                 </>

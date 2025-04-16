@@ -35,7 +35,9 @@ const GetAllJokes = () => {
         <>
             <div className='my-3'>
                 {/* A link to the home page */}
-                <Link to="/">Go Home</Link>
+                <Link to="/" className="group inline-block rounded-sm bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-[2px] hover:text-white focus:ring-3 focus:outline-hidden">
+                    <span className="block rounded-xs bg-white px-8 py-3 text-sm font-medium group-hover:bg-transparent">Go Home</span>
+                </Link>
             </div>
             {/* Does the state variable have a single index in its array? (how we check to see if there is data) */}
             {!allJokes[0] ?
@@ -47,7 +49,7 @@ const GetAllJokes = () => {
                     {allJokes.map(elem => {
                         return (
                             // Since elem contains an object, the dot operator allows access to the keys of the object to access the data
-                            <ViewCard key={elem.id} jid={elem.id} joke={elem.joke} answer={elem.answer} options={false}/>
+                            <ViewCard key={elem.id} jid={elem.id} joke={elem.joke} answer={elem.answer} jokeImage={elem.jokeImage && elem.jokeImage} options={false}/>
                         )
                     })}
                 </div>

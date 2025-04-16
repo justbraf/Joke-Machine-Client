@@ -4,13 +4,32 @@ import { useNavigate } from 'react-router'
 const AddJoke = () => {
     const goBack = useNavigate()
     const [formData, setFormData] = useState({})
+    const [formErrorData, setFormErrorData] = useState({})
+    const ERRORSTYLE = "border-red-700 border-2 " 
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        if (!formData.joke)
+        if (!formData.joke) {
+            setFormErrorData({
+                ...formErrorData,
+                joke: ERRORSTYLE
+            })
             return
-        if (!formData.answer)
+        }
+        if (!formData.answer) {
+            setFormErrorData({
+                ...formErrorData,
+                answer: ERRORSTYLE
+            })
             return
+        }
+        if (!formData.jokeImage) {
+            setFormErrorData({
+                ...formErrorData,
+                jokeImage: ERRORSTYLE
+            })
+            return
+        }
         const dataReq = new Request(
             'http://localhost:3000/new',
             {
@@ -23,8 +42,7 @@ const AddJoke = () => {
         fetch(dataReq)
             .then(resp => resp.json())
             .then(data => {
-                data.error ? alert(data.error) : alert(data.message)
-
+                data.error && alert(data.error)
                 goBack(-1)
             })
     }
@@ -33,6 +51,10 @@ const AddJoke = () => {
         setFormData({
             ...formData,
             [e.target.id]: e.target.value
+        })
+        setFormErrorData({
+            ...formErrorData,
+            [e.target.id]: ""
         })
     }
 
@@ -50,7 +72,7 @@ const AddJoke = () => {
                                 type="text"
                                 id="joke"
                                 placeholder=""
-                                className="peer mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm"
+                                className={formErrorData.joke ? formErrorData.joke + "peer mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm" : "peer mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm"}
                                 onChange={handleChange}
                             />
 
@@ -67,7 +89,7 @@ const AddJoke = () => {
                                 type="text"
                                 id="answer"
                                 placeholder=""
-                                className="peer mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm"
+                                className={formErrorData.answer ? formErrorData.answer + "peer mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm" : "peer mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm"}
                                 onChange={handleChange}
                             />
 
@@ -75,6 +97,23 @@ const AddJoke = () => {
                                 className="absolute inset-y-0 start-3 -translate-y-5 bg-white px-0.5 text-sm font-medium text-gray-700 transition-transform peer-placeholder-shown:translate-y-0 peer-focus:-translate-y-5"
                             >
                                 Answer
+                            </span>
+                        </label>
+                    </div>
+                    <div className='my-4'>
+                        <label htmlFor="JokeImage" className="relative">
+                            <input
+                                type="text"
+                                id="jokeImage"
+                                placeholder=""
+                                className={formErrorData.jokeImage ? formErrorData.jokeImage + "peer mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm" : "peer mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm"}
+                                onChange={handleChange}
+                            />
+
+                            <span
+                                className="absolute inset-y-0 start-3 -translate-y-5 bg-white px-0.5 text-sm font-medium text-gray-700 transition-transform peer-placeholder-shown:translate-y-0 peer-focus:-translate-y-5"
+                            >
+                                Image
                             </span>
                         </label>
                     </div>
