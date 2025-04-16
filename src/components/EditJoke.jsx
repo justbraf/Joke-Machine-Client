@@ -1,11 +1,31 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router'
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router'
 
 const EditJoke = () => {
+    // Access the ID of the joke from the URL
+    let myJID = useParams();
     const goBack = useNavigate()
     const [formData, setFormData] = useState({})
     const [formErrorData, setFormErrorData] = useState({})
     const ERRORSTYLE = "border-red-700 border-2 "
+
+    // Fetch data for the specific joke from the API.
+        useEffect(() => {
+            const dataReq = new Request(
+                'http://localhost:3000/joke/' + myJID.jid,
+                {
+                    // method: "GET",
+                    headers: {
+                        "content-type": "application/json",
+                    }
+                })
+    
+            fetch(dataReq)
+                .then(resp => resp.json())
+                .then(data => {
+                    setFormData(data)
+                })
+        }, [])
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -30,11 +50,10 @@ const EditJoke = () => {
             })
             return
         }
-        return // **************** mod code
         const dataReq = new Request(
-            'http://localhost:3000/new',
+            'http://localhost:3000/update/' + myJID.jid,
             {
-                method: "POST",
+                method: "PUT",
                 headers: {
                     "content-type": "application/json",
                 },
@@ -72,7 +91,7 @@ const EditJoke = () => {
                             <input
                                 type="text"
                                 id="joke"
-                                placeholder=""
+                                value={formData.joke}
                                 className={formErrorData.joke ? formErrorData.joke + "peer mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm" : "peer mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm"}
                                 onChange={handleChange}
                             />
@@ -89,7 +108,7 @@ const EditJoke = () => {
                             <input
                                 type="text"
                                 id="answer"
-                                placeholder=""
+                                value={formData.answer}
                                 className={formErrorData.answer ? formErrorData.answer + "peer mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm" : "peer mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm"}
                                 onChange={handleChange}
                             />
@@ -106,7 +125,7 @@ const EditJoke = () => {
                             <input
                                 type="text"
                                 id="jokeImage"
-                                placeholder=""
+                                value={formData.jokeImage}
                                 className={formErrorData.jokeImage ? formErrorData.jokeImage + "peer mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm" : "peer mt-0.5 w-full rounded border-gray-300 shadow-sm sm:text-sm"}
                                 onChange={handleChange}
                             />
