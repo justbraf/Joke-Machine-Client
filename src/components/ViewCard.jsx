@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router'
+import LikesBar from './LikesBar'
 
 // Component for viewing a single joke that accepts two children props
-const ViewCard = ({ jid, joke, answer, jokeImage, options }) => {
+const ViewCard = ({ jid, joke, answer, jokeImage, likes, options }) => {
     // Create a URL for the joke beign displayed
     const newPath = "/joke/" + jid
     const editPath = "/edit/" + jid
@@ -13,7 +14,7 @@ const ViewCard = ({ jid, joke, answer, jokeImage, options }) => {
             <span className="absolute inset-0 border-2 border-dashed border-black"></span>
             <div className="relative flex h-full transform items-end border-2 border-black bg-white transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2">
                 <div className="p-4 !pt-0 transition-opacity group-hover:absolute group-hover:opacity-0 sm:p-6 lg:p-8">
-                    {jokeImage && <img src={jokeImage} alt="image for joke {jid}" className='max-h-48' />}
+                    {jokeImage && <img src={jokeImage} alt="image for joke {jid}" className='max-h-48 rounded-md' />}
                     {/* Display the contents of the joke variable by enclosing it in curly braces */}
                     <h2 className="mt-4 text-xl font-medium sm:text-2xl">{joke}</h2>
                 </div>
@@ -36,9 +37,12 @@ const ViewCard = ({ jid, joke, answer, jokeImage, options }) => {
                     <p className="mt-4 text-sm sm:text-base">Joke ID: {jid}</p>
                     <p className="mt-8 font-bold">
                         {!options ?
-                            <Link to={newPath}>
-                                <i className="fa-solid fa-expand delay-150 duration-300 ease-in-out transistion-transform hover:scale-150"></i>
-                            </Link >
+                            <div className='flex flex-row gap-12'>
+                                <Link to={newPath}>
+                                    <i className="fa-solid fa-expand delay-150 duration-300 ease-in-out transistion-transform hover:scale-150"></i>
+                                </Link >
+                                <LikesBar likes={likes}/>
+                            </div>
                             :
                             <div className='grid grid-cols-4 gap-2'>
                                 <Link to={editPath}>
